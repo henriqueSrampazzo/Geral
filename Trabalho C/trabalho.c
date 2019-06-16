@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
+#include <string.h>
 
 #define pos_lv 10
 #define pos_vd 10
@@ -96,11 +97,11 @@ void iniciaLivros(LIVRO **ptr)
     }
 }
 
-void cadastraLivros(LIVRO **ptr)
+void cadastraLivros(LIVRO **ptr, int qtd)
 {
     int i=0;
 
-    for(i=0; i<3; i++)
+    for(i=0; i<qtd; i++)
     {
         if(ptr[i]==NULL)
 
@@ -120,26 +121,69 @@ void cadastraLivros(LIVRO **ptr)
         printf("\n\n");
     }
 
-            for(i=0; i<3; i++)
+            for(i=0; i<qtd; i++)
     {
         printf("\n\ncod: %i\n", ptr[i]->codigo);
         printf("\n\ntit: %s\n", ptr[i]->titulo);
         printf("\n\npre: %.2f\n", ptr[i]->preco);
+        
     }
 
+}
+
+void consultaPorTitulo(LIVRO **ptr, int qtd){
+	char tituloConsulta[100];
+	int i=0;
+	printf("Digite o título:");
+	scanf("%s", &tituloConsulta);
+	
+	for(i=0;i<qtd;i++){
+	if(strcmp(tituloConsulta,ptr[0]->titulo)==0){
+	printf("Resultado da pesquisa por \"%s\": ", tituloConsulta);
+	printf("\n\ncod: %i\n", ptr[0]->codigo);
+    printf("\n\ntit: %s\n", ptr[0]->titulo);
+    printf("\n\npre: %.2f\n", ptr[0]->preco);
+    }
+}
+}
+
+void exportaLivros(LIVRO **ptr, int qtd){
+  int i=0;
+  FILE *pont_arq;
+  
+  pont_arq = fopen("saidalivros.txt", "w");
+  
+  if(pont_arq == NULL)
+  {
+  printf("Erro na abertura do arquivo!");
+  }
+
+for(i=0;i<qtd;i++){
+  fprintf(pont_arq,"%i\n", ptr[i]->codigo);
+  fprintf(pont_arq,"%s\n", ptr[i]->titulo);
+  fprintf(pont_arq,"%.2f\n", ptr[i]->preco);
+}
+  fclose(pont_arq);
+  
+  printf("Dados gravados com sucesso!");
 }
 
 int main()
 {
     setlocale(LC_ALL,"Portuguese");
 
+	int qtd=2;
     //mostraMenu();
 
     LIVRO *acervo[pos_lv];
 
     iniciaLivros(acervo);
 
-    cadastraLivros(acervo);
+    cadastraLivros(acervo, qtd);
+    
+    //consultaPorTitulo(acervo);
+    
+    exportaLivros(acervo,qtd);
 
     return 0;
 }
