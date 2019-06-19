@@ -3,8 +3,8 @@
 #include <locale.h>
 #include <string.h>
 
-#define pos_lv 10
-#define pos_vd 10
+#define pos_lv 1
+#define pos_vd 1
 
 typedef struct
 {
@@ -24,70 +24,119 @@ typedef struct
 
 } VENDA;
 
-void mostraMenu()
+void mostraMenu()//menu principal
 {
     int opcoes=0;
 
+    LIVRO *acervo[pos_lv];
+    VENDA *vendas[pos_vd];
+
+    iniciaLivros(acervo);
+    iniciaVendas(vendas);
+
     do
     {
-        printf("\nEscolha uma das opção abaixo:");
-        printf("\n\Cadastro");
-        printf("\n2\n");
-        printf("\n>");
+        printf("Escolha uma das opï¿½ï¿½o abaixo:\n");
+        printf("\n1-Cadastrar livros com os dados cï¿½digo, tï¿½tulo e preï¿½o");
+        printf("\n2-Mostrar todos os dados de todos os livros cadastrados");
+        printf("\n3-Consultar todos os dados de livros pelo tï¿½tulo");
+        printf("\n4-Registar cada venda com os seguintes dados: cï¿½digo da venda, cï¿½digo do livro, quantidade de livros, data da venda e o valor total da venda");
+        printf("\n5-Consultar todos os dados de uma determinada venda por tï¿½tulo do livro");
+        printf("\n6-Consultar todos os dados de uma determinada venda por perï¿½odo, informando o valor total recebido");
+        printf("\n7-Mostrar todos os dados de todas as vendas realizadas");
+        printf("\n8-Exportar todos os dados de Livros e de Vendas para um arquivo txt");
+        printf("\n9-Importar os dados de Livros (cï¿½digo, tï¿½tulo e preï¿½o) de um arquivo txt");
+        printf("\n10-Encerrar o programa");
+        printf("\n\n>");
         scanf("%i",&opcoes);
 
         switch(opcoes)
         {
 
         case 1:
-            printf("Chamada de função1");
+
+            printf("\n----------Funï¿½ï¿½o iniciada----------\n");
+
+            cadastraLivros(acervo);
+
+            printf("\n----------Funï¿½ï¿½o encerrada----------\n\n");
+
             break;
 
         case 2:
-            printf("Chamada de função2");
+
+            printf("\n----------Funï¿½ï¿½o iniciada----------\n");
+
+            exibeLivros(acervo);
+
+            printf("\n----------Funï¿½ï¿½o encerrada----------\n\n");
+
             break;
 
         case 3:
-            printf("Chamada de função3");
+
+            printf("\n----------Funï¿½ï¿½o iniciada----------\n");
+
+            consultaPorTitulo(acervo);
+
+            printf("\n----------Funï¿½ï¿½o encerrada----------\n\n");
+
             break;
 
         case 4:
-            printf("Chamada de função4");
+            printf("\n----------Funï¿½ï¿½o iniciada----------\n");
+
+            cadastraVendas(vendas, acervo);
+
+            printf("\n----------Funï¿½ï¿½o encerrada----------\n\n");
+
             break;
 
         case 5:
-            printf("Chamada de função5");
+            printf("Chamada de funï¿½ï¿½o5");
             break;
 
         case 6:
-            printf("Chamada de função6");
+            printf("Chamada de funï¿½ï¿½o6");
             break;
 
         case 7:
-            printf("Chamada de função7");
+            printf("Chamada de funï¿½ï¿½o7");
             break;
 
         case 8:
-            printf("Chamada de função8");
+
+            printf("\n----------Funï¿½ï¿½o iniciada----------\n");
+
+            exportaLivros(acervo);
+
+            printf("\n----------Funï¿½ï¿½o encerrada----------\n\n");
+
+
             break;
 
         case 9:
-            printf("Chamada de função9");
+            printf("Chamada de funï¿½ï¿½o9");
+            break;
 
         case 10:
-            printf("Saindo...");
+            printf("Programa encerrado");
+        }
+
+        if(opcoes==10)
+        {
+            exit(0);
         }
 
         if(opcoes>10)
         {
-            printf("\nInválido! \nTente novamente\n\n\n\n");
-            system("cls");
+            printf("\nInvï¿½lido! \nTente novamente\n\n");
         }
     }
     while(opcoes !=10);
 }
 
-void iniciaLivros(LIVRO **ptr)
+void iniciaLivros(LIVRO **ptr)//seta os endereï¿½os que serï¿½o usados como null
 {
     int i=0;
 
@@ -97,93 +146,174 @@ void iniciaLivros(LIVRO **ptr)
     }
 }
 
-void cadastraLivros(LIVRO **ptr, int qtd)
+void iniciaVendas(VENDA **ptr2)
 {
     int i=0;
 
-    for(i=0; i<qtd; i++)
+    for(i=0; i<pos_vd; i++)
+    {
+        ptr2[i]=NULL;
+    }
+}
+
+void cadastraLivros(LIVRO **ptr) //Etapa 1
+{
+    int i=0;
+
+    for(i=0; i<pos_lv; i++)
     {
         if(ptr[i]==NULL)
 
             ptr[i] =(LIVRO*)malloc(sizeof(LIVRO));
 
-        printf("%i\n",i);
-
-        printf("Digite o código do livro: ");
+        printf("\nDigite o cï¿½digo do livro: ");
         scanf("%i", &ptr[i]->codigo);
 
-        printf("Digite o título do livro: ");
+        printf("Digite o tï¿½tulo do livro: ");
         scanf("%s", ptr[i]->titulo);
 
-        printf("Digite o preço do livro: ");
+        printf("Digite o preï¿½o do livro: ");
         scanf("%f", &ptr[i]->preco);
 
-        printf("\n\n");
+        // printf("\n");
     }
+}
 
-            for(i=0; i<qtd; i++)
+void cadastraVendas(VENDA **ptr2, LIVRO **ptr)
+{
+    int i=0, j=0;
+    float total=0;
+
+    for(i=0; i<pos_vd; i++)
     {
-        printf("\n\ncod: %i\n", ptr[i]->codigo);
-        printf("\n\ntit: %s\n", ptr[i]->titulo);
-        printf("\n\npre: %.2f\n", ptr[i]->preco);
-        
+        if(ptr2[i]==NULL)
+
+            ptr2[i] =(VENDA*)malloc(sizeof(VENDA));
+
+        printf("%i\n",i);
+
+        printf("Digite o cï¿½digo da venda: ");
+        scanf("%i", &ptr2[i]->codVenda);
+
+        printf("Digite o cï¿½digo do livro: ");
+        scanf("%i", &ptr2[i]->codLivro);
+
+        printf("Digite a data da venda: ");
+        scanf("%s", &ptr2[i]->data);
+
+        printf("Digite a quantidade: ");
+        scanf("%i", &ptr2[i]->qtd);
+
+        printf("\n\n");
+
+        for(j=0; j<pos_lv; j++)
+        {
+            if(ptr2[i]->codLivro == ptr[j]->codigo)
+            {
+                ptr2[i]->valorTotal = ptr[j]->preco * ptr2[i]->qtd;
+                printf("%f", ptr2[i]->valorTotal);
+            }
+            if(ptr2[i]->codLivro != ptr[j]->codigo)
+            {
+                printf("Cï¿½digo de livro informado nï¿½o existe.");
+            }
+        }
+
     }
 
 }
 
-void consultaPorTitulo(LIVRO **ptr, int qtd){
-	char tituloConsulta[100];
-	int i=0;
-	printf("Digite o título:");
-	scanf("%s", &tituloConsulta);
-	
-	for(i=0;i<qtd;i++){
-	if(strcmp(tituloConsulta,ptr[0]->titulo)==0){
-	printf("Resultado da pesquisa por \"%s\": ", tituloConsulta);
-	printf("\n\ncod: %i\n", ptr[0]->codigo);
-    printf("\n\ntit: %s\n", ptr[0]->titulo);
-    printf("\n\npre: %.2f\n", ptr[0]->preco);
+void exibeLivros(LIVRO **ptr)//Etapa 2
+{
+    int i;
+
+    for(i=0; i<pos_lv; i++)
+    {
+        printf("\nCï¿½digo: %i - Tï¿½tulo: %s - Preï¿½o: %.2f", ptr[i]->codigo, ptr[i]->titulo, ptr[i]->preco);
+    }
+
+    printf("\n");
+}
+
+void exibeVendas(VENDA **ptr2)//Etapa 2
+{
+    int i;
+
+    for(i=0; i<pos_vd; i++)
+    {
+        printf("\nCï¿½digo: %i - Cï¿½digo livro: %i - Data: %s - Quantidade: %i - Valor total: %.2f\n", ptr2[i]->codVenda, ptr2[i]->codLivro, ptr2[i]->data, ptr2[i]->qtd, ptr2[i]->valorTotal);
+    }
+
+    printf("\n");
+}
+
+void consultaPorTitulo(LIVRO **ptr)//Etapa 3
+{
+    char tituloConsulta[100];
+    int i=0;
+    printf("Digite o tï¿½tulo:");
+    scanf("%s", &tituloConsulta);
+
+    for(i=0; i<pos_lv; i++)
+    {
+        if(strcmp(tituloConsulta,ptr[i]->titulo)==0)
+        {
+            printf("\nResultado da pesquisa por \"%s\": ", tituloConsulta);
+
+            printf("\n\nCï¿½digo: %i - Tï¿½tulo: %s - Preï¿½o: %.2f\n", ptr[i]->codigo, ptr[i]->titulo, ptr[i]->preco);
+        }
     }
 }
+
+void exportaLivros(LIVRO **ptr)//Etapa 8.1
+{
+    int i=0;
+    FILE *pont_arq;
+
+    pont_arq = fopen("saidalivros.txt", "w");
+
+    if(pont_arq == NULL)
+    {
+        printf("Erro na abertura do arquivo!");
+    }
+
+    for(i=0; i<pos_lv; i++)
+    {
+        fprintf(pont_arq,"%i\n", ptr[i]->codigo);
+        fprintf(pont_arq,"%s\n", ptr[i]->titulo);
+        fprintf(pont_arq,"%.2f\n", ptr[i]->preco);
+    }
+    fclose(pont_arq);
+
+    printf("\n\nDados dos livros gravados com sucesso!\n");
 }
 
-void exportaLivros(LIVRO **ptr, int qtd){
-  int i=0;
-  FILE *pont_arq;
-  
-  pont_arq = fopen("saidalivros.txt", "w");
-  
-  if(pont_arq == NULL)
-  {
-  printf("Erro na abertura do arquivo!");
-  }
+void exportaVendas(VENDA **ptr2)
+{
+    int i=0;
+    FILE *pont_arq;
 
-for(i=0;i<qtd;i++){
-  fprintf(pont_arq,"%i\n", ptr[i]->codigo);
-  fprintf(pont_arq,"%s\n", ptr[i]->titulo);
-  fprintf(pont_arq,"%.2f\n", ptr[i]->preco);
-}
-  fclose(pont_arq);
-  
-  printf("Dados gravados com sucesso!");
+    pont_arq = fopen("saidavendas.txt", "w");
+
+    if(pont_arq == NULL)
+    {
+        printf("Erro na abertura do arquivo!");
+    }
+
+    for(i=0; i<pos_vd; i++)
+    {
+        fprintf(pont_arq,"Cï¿½digo: %i - Cï¿½digo livro: %i - Data: %s - Quantidade: %i - Valor total: %.2f\n", ptr2[i]->codVenda, ptr2[i]->codLivro, ptr2[i]->data, ptr2[i]->qtd, ptr2[i]->valorTotal);
+    }
+    fclose(pont_arq);
+
+    printf("Vendas gravadas com sucesso!");
 }
 
 int main()
 {
     setlocale(LC_ALL,"Portuguese");
 
-	int qtd=2;
-    //mostraMenu();
-
-    LIVRO *acervo[pos_lv];
-
-    iniciaLivros(acervo);
-
-    cadastraLivros(acervo, qtd);
-    
-    //consultaPorTitulo(acervo);
-    
-    exportaLivros(acervo,qtd);
+    mostraMenu();
 
     return 0;
 }
