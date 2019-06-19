@@ -36,16 +36,16 @@ void mostraMenu()//menu principal
 
     do
     {
-        printf("Escolha uma das op��o abaixo:\n");
-        printf("\n1-Cadastrar livros com os dados c�digo, t�tulo e pre�o");
-        printf("\n2-Mostrar todos os dados de todos os livros cadastrados");
-        printf("\n3-Consultar todos os dados de livros pelo t�tulo");
-        printf("\n4-Registar cada venda com os seguintes dados: c�digo da venda, c�digo do livro, quantidade de livros, data da venda e o valor total da venda");
-        printf("\n5-Consultar todos os dados de uma determinada venda por t�tulo do livro");
-        printf("\n6-Consultar todos os dados de uma determinada venda por per�odo, informando o valor total recebido");
-        printf("\n7-Mostrar todos os dados de todas as vendas realizadas");
+        printf("Escolha uma das opção abaixo:\n");
+        printf("\n1-Cadastrar livros");
+        printf("\n2-Mostrar livros");
+        printf("\n3-Consultar livros por título");
+        printf("\n4-Registar vendas");
+        printf("\n5-Consultar venda por título do livro");
+        printf("\n6-Consultar venda por data");
+        printf("\n7-Mostrar vendas");
         printf("\n8-Exportar todos os dados de Livros e de Vendas para um arquivo txt");
-        printf("\n9-Importar os dados de Livros (c�digo, t�tulo e pre�o) de um arquivo txt");
+        printf("\n9-Importar os dados de Livros e Vendas de um arquivo txt");
         printf("\n10-Encerrar o programa");
         printf("\n\n>");
         scanf("%i",&opcoes);
@@ -55,68 +55,68 @@ void mostraMenu()//menu principal
 
         case 1:
 
-            printf("\n----------Fun��o iniciada----------\n");
+            printf("\n----------Função iniciada----------\n");
 
             cadastraLivros(acervo);
 
-            printf("\n----------Fun��o encerrada----------\n\n");
+            printf("\n----------Função encerrada----------\n\n");
 
             break;
 
         case 2:
 
-            printf("\n----------Fun��o iniciada----------\n");
+            printf("\n----------Função iniciada----------\n");
 
             exibeLivros(acervo);
 
-            printf("\n----------Fun��o encerrada----------\n\n");
+            printf("\n----------Função encerrada----------\n\n");
 
             break;
 
         case 3:
 
-            printf("\n----------Fun��o iniciada----------\n");
+            printf("\n----------Função iniciada----------\n");
 
             consultaPorTitulo(acervo);
 
-            printf("\n----------Fun��o encerrada----------\n\n");
+            printf("\n----------Função encerrada----------\n\n");
 
             break;
 
         case 4:
-            printf("\n----------Fun��o iniciada----------\n");
+            printf("\n----------Função iniciada----------\n");
 
             cadastraVendas(vendas, acervo);
 
-            printf("\n----------Fun��o encerrada----------\n\n");
+            printf("\n----------Função encerrada----------\n\n");
 
             break;
 
         case 5:
-            printf("Chamada de fun��o5");
+            printf("Chamada de função5");
             break;
 
         case 6:
-            printf("Chamada de fun��o6");
+            printf("Chamada de função6");
             break;
 
         case 7:
-            printf("Chamada de fun��o7");
+            printf("Chamada de função7");
             break;
 
         case 8:
 
-            printf("\n----------Fun��o iniciada----------\n");
+            printf("\n----------Função iniciada----------\n");
 
             exportaLivros(acervo);
 
-            printf("\n----------Fun��o encerrada----------\n\n");
+            printf("\n----------Função encerrada----------\n\n");
 
 
             break;
 
         case 9:
-            printf("Chamada de fun��o9");
+            printf("Chamada de função9");
             break;
 
         case 10:
@@ -130,13 +130,13 @@ void mostraMenu()//menu principal
 
         if(opcoes>10)
         {
-            printf("\nInv�lido! \nTente novamente\n\n");
+            printf("\nInválido! \nTente novamente\n\n");
         }
     }
     while(opcoes !=10);
 }
 
-void iniciaLivros(LIVRO **ptr)//seta os endere�os que ser�o usados como null
+void iniciaLivros(LIVRO **ptr)//seta os endereços que serão usados como null
 {
     int i=0;
 
@@ -166,20 +166,20 @@ void cadastraLivros(LIVRO **ptr) //Etapa 1
 
             ptr[i] =(LIVRO*)malloc(sizeof(LIVRO));
 
-        printf("\nDigite o c�digo do livro: ");
+        printf("\nDigite o código do livro: ");
         scanf("%i", &ptr[i]->codigo);
 
-        printf("Digite o t�tulo do livro: ");
+        printf("Digite o título do livro: ");
         scanf("%s", ptr[i]->titulo);
 
-        printf("Digite o pre�o do livro: ");
+        printf("Digite o preço do livro: ");
         scanf("%f", &ptr[i]->preco);
 
         // printf("\n");
     }
 }
 
-void cadastraVendas(VENDA **ptr2, LIVRO **ptr)
+void cadastraVendas(VENDA **ptr2, LIVRO **ptr) //Etapa 4
 {
     int i=0, j=0;
     float total=0;
@@ -192,10 +192,10 @@ void cadastraVendas(VENDA **ptr2, LIVRO **ptr)
 
         printf("%i\n",i);
 
-        printf("Digite o c�digo da venda: ");
+        printf("Digite o código da venda: ");
         scanf("%i", &ptr2[i]->codVenda);
 
-        printf("Digite o c�digo do livro: ");
+        printf("Digite o código do livro: ");
         scanf("%i", &ptr2[i]->codLivro);
 
         printf("Digite a data da venda: ");
@@ -215,7 +215,7 @@ void cadastraVendas(VENDA **ptr2, LIVRO **ptr)
             }
             if(ptr2[i]->codLivro != ptr[j]->codigo)
             {
-                printf("C�digo de livro informado n�o existe.");
+                printf("Código de livro informado não existe.");
             }
         }
 
@@ -223,35 +223,35 @@ void cadastraVendas(VENDA **ptr2, LIVRO **ptr)
 
 }
 
-void exibeLivros(LIVRO **ptr)//Etapa 2
+void exibeLivros(LIVRO **ptr) //Etapa 2
 {
     int i;
 
     for(i=0; i<pos_lv; i++)
     {
-        printf("\nC�digo: %i - T�tulo: %s - Pre�o: %.2f", ptr[i]->codigo, ptr[i]->titulo, ptr[i]->preco);
+        printf("\nCódigo: %i - Título: %s - Preço: %.2f", ptr[i]->codigo, ptr[i]->titulo, ptr[i]->preco);
     }
 
     printf("\n");
 }
 
-void exibeVendas(VENDA **ptr2)//Etapa 2
+void exibeVendas(VENDA **ptr2) //Etapa 7
 {
     int i;
 
     for(i=0; i<pos_vd; i++)
     {
-        printf("\nC�digo: %i - C�digo livro: %i - Data: %s - Quantidade: %i - Valor total: %.2f\n", ptr2[i]->codVenda, ptr2[i]->codLivro, ptr2[i]->data, ptr2[i]->qtd, ptr2[i]->valorTotal);
+        printf("\nCódigo: %i - Código livro: %i - Data: %s - Quantidade: %i - Valor total: %.2f\n", ptr2[i]->codVenda, ptr2[i]->codLivro, ptr2[i]->data, ptr2[i]->qtd, ptr2[i]->valorTotal);
     }
 
     printf("\n");
 }
 
-void consultaPorTitulo(LIVRO **ptr)//Etapa 3
+void consultaPorTitulo(LIVRO **ptr) //Etapa 3
 {
     char tituloConsulta[100];
     int i=0;
-    printf("Digite o t�tulo:");
+    printf("Digite o título:");
     scanf("%s", &tituloConsulta);
 
     for(i=0; i<pos_lv; i++)
@@ -260,12 +260,12 @@ void consultaPorTitulo(LIVRO **ptr)//Etapa 3
         {
             printf("\nResultado da pesquisa por \"%s\": ", tituloConsulta);
 
-            printf("\n\nC�digo: %i - T�tulo: %s - Pre�o: %.2f\n", ptr[i]->codigo, ptr[i]->titulo, ptr[i]->preco);
+            printf("\n\nCódigo: %i - Título: %s - Preço: %.2f\n", ptr[i]->codigo, ptr[i]->titulo, ptr[i]->preco);
         }
     }
 }
 
-void exportaLivros(LIVRO **ptr)//Etapa 8.1
+void exportaLivros(LIVRO **ptr) //Etapa 8.1
 {
     int i=0;
     FILE *pont_arq;
@@ -288,7 +288,7 @@ void exportaLivros(LIVRO **ptr)//Etapa 8.1
     printf("\n\nDados dos livros gravados com sucesso!\n");
 }
 
-void exportaVendas(VENDA **ptr2)
+void exportaVendas(VENDA **ptr2) //Etapa 8.2
 {
     int i=0;
     FILE *pont_arq;
@@ -302,7 +302,7 @@ void exportaVendas(VENDA **ptr2)
 
     for(i=0; i<pos_vd; i++)
     {
-        fprintf(pont_arq,"C�digo: %i - C�digo livro: %i - Data: %s - Quantidade: %i - Valor total: %.2f\n", ptr2[i]->codVenda, ptr2[i]->codLivro, ptr2[i]->data, ptr2[i]->qtd, ptr2[i]->valorTotal);
+        fprintf(pont_arq,"Código: %i - Código livro: %i - Data: %s - Quantidade: %i - Valor total: %.2f\n", ptr2[i]->codVenda, ptr2[i]->codLivro, ptr2[i]->data, ptr2[i]->qtd, ptr2[i]->valorTotal);
     }
     fclose(pont_arq);
 
