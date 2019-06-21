@@ -1,6 +1,2 @@
-1
-qwe
-3,00
-321
-weq
-2,00
+Código: 1 - Título: 1 - Preço: 1,00
+Código: 1 - Título: 1 - Preço: 1,00
