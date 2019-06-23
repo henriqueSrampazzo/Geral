@@ -235,39 +235,48 @@ void consultaPorTituloLivros(LIVRO **ptr) //Etapa 3
 
 void cadastraVendas(VENDA **ptr2, LIVRO **ptr)//etapa 4
 {
-    int i=0, j=0;
-    float total=0;
+    int i=0, j=0, codAux=0;     
 
     for(i=0; i<pos_vd; i++)
     {
         if(ptr2[i]==NULL)
 
-            ptr2[i] =(VENDA*)malloc(sizeof(VENDA));
+        ptr2[i] =(VENDA*)malloc(sizeof(VENDA));
 
         printf("\nDigite o código da venda: ");
         scanf("%i", &ptr2[i]->codVenda);
 
         printf("Digite o código do livro: ");
-        scanf("%i", &ptr2[i]->codLivro);
+        scanf("%i", &codAux); 
+        
+        for(j=0;j<pos_lv;j++){
+        if(codAux != ptr[j]->codigo){
+		printf("Código de livro não existe. digite outro: ");
+		scanf("%i", &codAux);		
+		}else{
+			break;
+		ptr2[i]->codLivro = codAux;
+	}
+	ptr2[i]->codLivro = codAux;
+	}
+		//scanf("%i", &ptr2[i]->codLivro); 
 
         printf("Digite a data da venda: ");
         scanf("%s", &ptr2[i]->data);
 
         printf("Digite a quantidade: ");
         scanf("%i", &ptr2[i]->qtd);
-
-        for(j=0; j<pos_vd; j++)
-        {
-            if(ptr2[i]->codLivro == ptr[j]->codigo)
-            {
-                ptr2[i]->valorTotal = ptr[j]->preco * ptr2[i]->qtd;
-                //printf("%f", ptr2[i]->valorTotal);
-            }
-            if(ptr2[i]->codLivro != ptr[j]->codigo)
-             {
-               printf("Código de livro informado não existe.");
-             }
-        }
+        
+        for(j=0;j<pos_lv;j++){
+        if(ptr2[i]->codLivro == ptr[j]->codigo){
+        ptr2[i]->valorTotal = ptr[j]->preco * ptr2[i]->qtd;
+        printf("%f", ptr2[i]->valorTotal);
+    }
+    else{
+    	printf("Código do livro não existe");
+    	break;
+	}
+}
     }
 }
 
