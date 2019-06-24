@@ -353,16 +353,18 @@ void exportaVendas(VENDA **ptr2) //Etapa 8.2
 void importaLivros(LIVRO **ptr){
 	FILE *pont_arq;
 	char c, linha[100];
-	int i=0;
+	int i=0, j=0;
 	   pont_arq = fopen("saidalivros.txt","r");       
   // while (!feof(pont_arq))
   //  {
       // fscanf(pont_arq,"%c",&c);
       // printf("%c",c);
        
-       for (i=0; i<3; i++){
+       for (i=0; i<9; i++){
+   
    fgets(linha, sizeof(linha), pont_arq);
    printf("%s",linha);
+
 }
    // } 
    fclose(pont_arq);
