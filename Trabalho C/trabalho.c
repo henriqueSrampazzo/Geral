@@ -140,7 +140,7 @@ void mostraMenu()//menu principal
 
             printf("\n----------Função iniciada----------\n");
 
-
+			importaLivros(acervo);
 
             printf("\n----------Função encerrada----------\n\n");
 
@@ -247,36 +247,16 @@ void cadastraVendas(VENDA **ptr2, LIVRO **ptr)//etapa 4
         scanf("%i", &ptr2[i]->codVenda);
 
         printf("Digite o código do livro: ");
-        scanf("%i", &codAux); 
-        
-        for(j=0;j<pos_lv;j++){
-        if(codAux != ptr[j]->codigo){
-		printf("Código de livro não existe. digite outro: ");
-		scanf("%i", &codAux);		
-		}else{
-			break;
-		ptr2[i]->codLivro = codAux;
-	}
-	ptr2[i]->codLivro = codAux;
-	}
-		//scanf("%i", &ptr2[i]->codLivro); 
+		scanf("%i", &ptr2[i]->codLivro); 
 
         printf("Digite a data da venda: ");
         scanf("%s", &ptr2[i]->data);
 
         printf("Digite a quantidade: ");
         scanf("%i", &ptr2[i]->qtd);
-        
-        for(j=0;j<pos_lv;j++){
-        if(ptr2[i]->codLivro == ptr[j]->codigo){
+
         ptr2[i]->valorTotal = ptr[j]->preco * ptr2[i]->qtd;
         printf("%f", ptr2[i]->valorTotal);
-    }
-    else{
-    	printf("Código do livro não existe");
-    	break;
-	}
-}
     }
 }
 
@@ -368,6 +348,25 @@ void exportaVendas(VENDA **ptr2) //Etapa 8.2
     fclose(pont_arq);
 
     printf("\nDados das vendas gravados com sucesso!\n");
+}
+
+void importaLivros(LIVRO **ptr){
+	FILE *pont_arq;
+	char c, linha[100];
+	int i=0;
+	   pont_arq = fopen("saidalivros.txt","r");       
+  // while (!feof(pont_arq))
+  //  {
+      // fscanf(pont_arq,"%c",&c);
+      // printf("%c",c);
+       
+       for (i=0; i<3; i++){
+   fgets(linha, sizeof(linha), pont_arq);
+   printf("%s",linha);
+}
+   // } 
+   fclose(pont_arq);
+	
 }
 
 int main()

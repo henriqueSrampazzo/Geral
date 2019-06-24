@@ -1,2 +1,3 @@
-Código: 1 - Título: 1 - Preço: 1,00
-Código: 1 - Título: 1 - Preço: 1,00
+Código: 1 - Título: um - Preço: 1,00
+Código: 2 - Título: dois - Preço: 2,00
+Código: 3 - Título: dois - Preço: 2,00
