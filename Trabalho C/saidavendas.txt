@@ -1,0 +1,5 @@
+Código: 1 - Código livro: 1 - Data: 1 - Quantidade: 1 - Valor total: 1,00
+Código: 2 - Código livro: 2 - Data: 2 - Quantidade: 2 - Valor total: 4,00
+Código: 3 - Código livro: 3 - Data: 3 - Quantidade: 3 - Valor total: 9,00
+Código: 4 - Código livro: 4 - Data: 4 - Quantidade: 4 - Valor total: 16,00
+Código: 5 - Código livro: 5 - Data: 5 - Quantidade: 5 - Valor total: 25,00

@@ -3,8 +3,8 @@
 #include <locale.h>
 #include <string.h>
 
-#define pos_lv 2
-#define pos_vd 2
+#define pos_lv 5
+#define pos_vd 5
 
 typedef struct
 {
@@ -44,8 +44,8 @@ void mostraMenu()//menu principal
         printf("\n5-Consultar venda por título do livro");
         printf("\n6-Consultar venda por data");
         printf("\n7-Mostrar vendas");
-        printf("\n8-Exportar todos os dados de Livros e de Vendas para um arquivo txt");
-        printf("\n9-Importar os dados de Livros e Vendas de um arquivo txt");
+        printf("\n8-Exportar todos os dados de Livros e de Vendas para um arquivo .txt");
+        printf("\n9-Importar os dados de Livros e Vendas de um arquivo .txt");
         printf("\n10-Encerrar o programa");
         printf("\n\n>");
         scanf("%i",&opcoes);
@@ -107,7 +107,7 @@ void mostraMenu()//menu principal
 
             printf("\n----------Função iniciada----------\n");
 
-            consultaPorDataVendas(vendas);
+            consultaPorDataVendas(vendas,acervo);
 
             printf("\n----------Função encerrada----------\n\n");
 
@@ -128,11 +128,9 @@ void mostraMenu()//menu principal
             printf("\n----------Função iniciada----------\n");
 
             exportaLivros(acervo);
-
             exportaVendas(vendas);
 
             printf("\n----------Função encerrada----------\n\n");
-
 
             break;
 
@@ -140,9 +138,10 @@ void mostraMenu()//menu principal
 
             printf("\n----------Função iniciada----------\n");
 
-			importaLivros(acervo);
+            importaLivros(acervo);
+            importaVendas(vendas);
 
-            printf("\n----------Função encerrada----------\n\n");
+            printf("----------Função encerrada----------\n\n");
 
             break;
 
@@ -210,6 +209,13 @@ void exibeLivros(LIVRO **ptr) //Etapa 2
 
     for(i=0; i<pos_lv; i++)
     {
+        if(ptr[i]==NULL)
+        {
+            printf("\nCadastre livros para mostrar livros!");
+
+            break;
+        }
+
         printf("\nCódigo: %i - Título: %s - Preço: %.2f", ptr[i]->codigo, ptr[i]->titulo, ptr[i]->preco);
     }
 }
@@ -224,6 +230,13 @@ void consultaPorTituloLivros(LIVRO **ptr) //Etapa 3
 
     for(i=0; i<pos_lv; i++)
     {
+        if(ptr[i]==NULL)
+        {
+            printf("\nCadastre livros para consultar livros!\n");
+
+            break;
+        }
+
         if(strcmp(tituloConsulta,ptr[i]->titulo)==0)
         {
             printf("\nResultado da pesquisa por \"%s\": ", tituloConsulta);
@@ -235,19 +248,26 @@ void consultaPorTituloLivros(LIVRO **ptr) //Etapa 3
 
 void cadastraVendas(VENDA **ptr2, LIVRO **ptr)//etapa 4
 {
-    int i=0, j=0, codAux=0;     
+    int i=0, j=0, codAux=0;
 
     for(i=0; i<pos_vd; i++)
     {
+        if(ptr[i]==NULL)
+        {
+            printf("\nCadastre livros para realiazar vendas!\n");
+
+            break;
+        }
+
         if(ptr2[i]==NULL)
 
-        ptr2[i] =(VENDA*)malloc(sizeof(VENDA));
+            ptr2[i] =(VENDA*)malloc(sizeof(VENDA));
 
         printf("\nDigite o código da venda: ");
         scanf("%i", &ptr2[i]->codVenda);
 
         printf("Digite o código do livro: ");
-		scanf("%i", &ptr2[i]->codLivro); 
+        scanf("%i", &ptr2[i]->codLivro);
 
         printf("Digite a data da venda: ");
         scanf("%s", &ptr2[i]->data);
@@ -255,17 +275,31 @@ void cadastraVendas(VENDA **ptr2, LIVRO **ptr)//etapa 4
         printf("Digite a quantidade: ");
         scanf("%i", &ptr2[i]->qtd);
 
-        ptr2[i]->valorTotal = ptr[j]->preco * ptr2[i]->qtd;
-        printf("%f", ptr2[i]->valorTotal);
+        if(ptr[i]->codigo != ptr2[i]->codLivro)
+        {
+            printf("\nCódigo de livro informado não existe! Tente novamente.\n");
+            i--;
+        }
+        else
+        {
+            ptr2[i]->valorTotal = ptr[i]->preco * ptr2[i]->qtd;
+        }
     }
 }
 
-void exibeVendas(VENDA **ptr2) //Etapa 5
+void exibeVendas(VENDA **ptr2,LIVRO **ptr) //Etapa 5
 {
     int i;
 
     for(i=0; i<pos_lv; i++)
     {
+        if(ptr[i]==NULL)
+        {
+            printf("Cadastre livros para exibir vendas!\n");
+
+            break;
+        }
+
         printf("Código: %i - Código livro: %i - Data: %s - Quantidade: %i - Valor total: %.2f\n", ptr2[i]->codVenda, ptr2[i]->codLivro, ptr2[i]->data, ptr2[i]->qtd, ptr2[i]->valorTotal);
     }
 }
@@ -280,6 +314,13 @@ void consultaPorTituloVendas(VENDA **ptr2, LIVRO **ptr) //Etapa 6
 
     for(i=0; i<pos_vd; i++)
     {
+        if(ptr[i]==NULL)
+        {
+            printf("\nCadastre livros para consultar vendas!\n");
+
+            break;
+        }
+
         if(strcmp(tituloConsulta,ptr[i]->titulo)==0)
         {
             printf("\nResultado da pesquisa por \"%s\": ", tituloConsulta);
@@ -289,7 +330,7 @@ void consultaPorTituloVendas(VENDA **ptr2, LIVRO **ptr) //Etapa 6
     }
 }
 
-void consultaPorDataVendas(VENDA **ptr2) //Etapa 7
+void consultaPorDataVendas(VENDA **ptr2,LIVRO **ptr) //Etapa 7
 {
     char dataConsulta[100];
     int i=0;
@@ -299,6 +340,13 @@ void consultaPorDataVendas(VENDA **ptr2) //Etapa 7
 
     for(i=0; i<pos_vd; i++)
     {
+        if(ptr[i]==NULL)
+        {
+            printf("\nCadastre livros para consultar vendas!\n");
+
+            break;
+        }
+
         if(strcmp(dataConsulta,ptr2[i]->data)==0)
         {
             printf("\nResultado da pesquisa por \"%s\": ", dataConsulta);
@@ -310,7 +358,8 @@ void consultaPorDataVendas(VENDA **ptr2) //Etapa 7
 
 void exportaLivros(LIVRO **ptr) //Etapa 8.1
 {
-    int i=0;
+    int i=0, v=0;
+
     FILE *pont_arq;
 
     pont_arq = fopen("saidalivros.txt", "w");
@@ -322,16 +371,28 @@ void exportaLivros(LIVRO **ptr) //Etapa 8.1
 
     for(i=0; i<pos_lv; i++)
     {
+        if(ptr[i]==NULL)
+        {
+            printf("\nCadastre livros para exportar livros!\n");
+            v=1;
+
+            break;
+        }
+
         fprintf(pont_arq,"Código: %i - Título: %s - Preço: %.2f\n", ptr[i]->codigo, ptr[i]->titulo, ptr[i]->preco);
     }
     fclose(pont_arq);
 
-    printf("\nDados dos livros gravados com sucesso!\n");
+    if(v!=1)
+    {
+        printf("\nDados dos livros gravados com sucesso!\n");
+    }
 }
 
 void exportaVendas(VENDA **ptr2) //Etapa 8.2
 {
-    int i=0;
+    int i=0, v=0;
+
     FILE *pont_arq;
 
     pont_arq = fopen("saidavendas.txt", "w");
@@ -343,32 +404,71 @@ void exportaVendas(VENDA **ptr2) //Etapa 8.2
 
     for(i=0; i<pos_vd; i++)
     {
+        if(ptr2[i]==NULL)
+        {
+            printf("\nCadastre vendas para exportar vendas!\n");
+            v=1;
+
+            break;
+        }
+
         fprintf(pont_arq,"Código: %i - Código livro: %i - Data: %s - Quantidade: %i - Valor total: %.2f\n", ptr2[i]->codVenda, ptr2[i]->codLivro, ptr2[i]->data, ptr2[i]->qtd, ptr2[i]->valorTotal);
     }
+
     fclose(pont_arq);
 
-    printf("\nDados das vendas gravados com sucesso!\n");
+    if(v!=1)
+    {
+        printf("\nDados das vendas gravados com sucesso!\n");
+    }
 }
 
-void importaLivros(LIVRO **ptr){
-	FILE *pont_arq;
-	char c, linha[100];
-	int i=0, j=0;
-	   pont_arq = fopen("saidalivros.txt","r");       
-  // while (!feof(pont_arq))
-  //  {
-      // fscanf(pont_arq,"%c",&c);
-      // printf("%c",c);
-       
-       for (i=0; i<9; i++){
-   
-   fgets(linha, sizeof(linha), pont_arq);
-   printf("%s",linha);
+void importaLivros(LIVRO **ptr)  //Etapa 9.1
+{
+    FILE *pont_arq;
+    char c, linha[100];
+    int i=0, j=0;
+    pont_arq = fopen("saidalivros.txt","r");
+    printf("\nLivros:\n\n");
 
+    for (i=0; i<pos_lv; i++)
+    {
+        if(pont_arq == NULL)
+        {
+            printf("Erro na abertura do arquivo!\n");
+
+            break;
+        }
+
+        fgets(linha, sizeof(linha), pont_arq);
+        printf("%s\n",linha);
+    }
+
+    fclose(pont_arq);
 }
-   // } 
-   fclose(pont_arq);
-	
+
+void importaVendas(VENDA **ptr2)  //Etapa 9.2
+{
+    FILE *pont_arq;
+    char c, linha[150];
+    int i=0, j=0;
+    pont_arq = fopen("saidavendas.txt","r");
+    printf("\nVendas:\n\n");
+
+    for (i=0; i<pos_vd; i++)
+    {
+        if(pont_arq == NULL)
+        {
+            printf("Erro na abertura do arquivo!\n\n");
+
+            break;
+        }
+
+        fgets(linha, sizeof(linha), pont_arq);
+        printf("%s\n",linha);
+    }
+
+    fclose(pont_arq);
 }
 
 int main()

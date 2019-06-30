@@ -1,9 +1,5 @@
-1
-titulo1
-1 real
-2
-titulo2
-2 real
-3
-titulo3
-3 real
+Código: 1 - Título: 1 - Preço: 1,00
+Código: 2 - Título: 2 - Preço: 2,00
+Código: 3 - Título: 3 - Preço: 3,00
+Código: 4 - Título: 4 - Preço: 4,00
+Código: 5 - Título: 5 - Preço: 5,00
