@@ -196,9 +196,11 @@ void cadastraLivros(LIVRO **ptr) //Etapa 1
         scanf("%i", &ptr[i]->codigo);
 
         printf("Digite o título do livro: ");
-        scanf("%s", ptr[i]->titulo);
-
-        printf("Digite o preço do livro: ");
+        fflush(stdin);
+        scanf("%[^\n]s", ptr[i]->titulo);
+		fflush(stdin);
+        
+		printf("Digite o preço do livro: ");
         scanf("%f", &ptr[i]->preco);
     }
 }
@@ -226,8 +228,10 @@ void consultaPorTituloLivros(LIVRO **ptr) //Etapa 3
     int i=0;
 
     printf("\nDigite o título:");
-    scanf("%s", &tituloConsulta);
-
+    fflush(stdin);
+    scanf("%[^\n]s", &tituloConsulta);
+	fflush(stdin);
+    
     for(i=0; i<pos_lv; i++)
     {
         if(ptr[i]==NULL)
@@ -248,7 +252,7 @@ void consultaPorTituloLivros(LIVRO **ptr) //Etapa 3
 
 void cadastraVendas(VENDA **ptr2, LIVRO **ptr)//etapa 4
 {
-    int i=0, j=0, codAux=0;
+    int i=0, j=0, qtd=0;
 
     for(i=0; i<pos_vd; i++)
     {
@@ -268,22 +272,28 @@ void cadastraVendas(VENDA **ptr2, LIVRO **ptr)//etapa 4
 
         printf("Digite o código do livro: ");
         scanf("%i", &ptr2[i]->codLivro);
+        
+		printf("Digite a quantidade: ");
+        scanf("%i", &ptr2[i]->qtd);
 
         printf("Digite a data da venda: ");
         scanf("%s", &ptr2[i]->data);
 
-        printf("Digite a quantidade: ");
-        scanf("%i", &ptr2[i]->qtd);
-
-        if(ptr[i]->codigo != ptr2[i]->codLivro)
+	qtd=0;
+		
+	for(j=0;j<pos_lv;j++){
+        if(ptr[j]->codigo != ptr2[i]->codLivro)
         {
+        	qtd++;
+        	if(qtd==pos_lv)
             printf("\nCódigo de livro informado não existe! Tente novamente.\n");
-            i--;
+        
         }
         else
         {
-            ptr2[i]->valorTotal = ptr[i]->preco * ptr2[i]->qtd;
+            ptr2[i]->valorTotal = ptr[j]->preco * ptr2[i]->qtd;
         }
+    }
     }
 }
 
@@ -310,7 +320,9 @@ void consultaPorTituloVendas(VENDA **ptr2, LIVRO **ptr) //Etapa 6
     int i=0;
 
     printf("\nDigite o título:");
-    scanf("%s", &tituloConsulta);
+    fflush(stdin);
+    scanf("%[^\n]s", &tituloConsulta);
+	fflush(stdin);
 
     for(i=0; i<pos_vd; i++)
     {
