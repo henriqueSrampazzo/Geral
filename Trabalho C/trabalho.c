@@ -198,9 +198,9 @@ void cadastraLivros(LIVRO **ptr) //Etapa 1
         printf("Digite o título do livro: ");
         fflush(stdin);
         scanf("%[^\n]s", ptr[i]->titulo);
-		fflush(stdin);
-        
-		printf("Digite o preço do livro: ");
+        fflush(stdin);
+
+        printf("Digite o preço do livro: ");
         scanf("%f", &ptr[i]->preco);
     }
 }
@@ -214,7 +214,6 @@ void exibeLivros(LIVRO **ptr) //Etapa 2
         if(ptr[i]==NULL)
         {
             printf("\nCadastre livros para mostrar livros!");
-
             break;
         }
 
@@ -230,8 +229,8 @@ void consultaPorTituloLivros(LIVRO **ptr) //Etapa 3
     printf("\nDigite o título:");
     fflush(stdin);
     scanf("%[^\n]s", &tituloConsulta);
-	fflush(stdin);
-    
+    fflush(stdin);
+
     for(i=0; i<pos_lv; i++)
     {
         if(ptr[i]==NULL)
@@ -259,7 +258,6 @@ void cadastraVendas(VENDA **ptr2, LIVRO **ptr)//etapa 4
         if(ptr[i]==NULL)
         {
             printf("\nCadastre livros para realiazar vendas!\n");
-
             break;
         }
 
@@ -272,28 +270,28 @@ void cadastraVendas(VENDA **ptr2, LIVRO **ptr)//etapa 4
 
         printf("Digite o código do livro: ");
         scanf("%i", &ptr2[i]->codLivro);
-        
-		printf("Digite a quantidade: ");
+
+        printf("Digite a quantidade: ");
         scanf("%i", &ptr2[i]->qtd);
 
         printf("Digite a data da venda: ");
         scanf("%s", &ptr2[i]->data);
 
-	qtd=0;
-		
-	for(j=0;j<pos_lv;j++){
-        if(ptr[j]->codigo != ptr2[i]->codLivro)
+        qtd=0;
+
+        for(j=0; j<pos_lv; j++)
         {
-        	qtd++;
-        	if(qtd==pos_lv)
-            printf("\nCódigo de livro informado não existe! Tente novamente.\n");
-        
+            if(ptr[j]->codigo != ptr2[i]->codLivro)
+            {
+                qtd++;
+                if(qtd==pos_lv)
+                    printf("\nCódigo de livro informado não existe! Tente novamente.\n");
+            }
+            else
+            {
+                ptr2[i]->valorTotal = ptr[j]->preco * ptr2[i]->qtd;
+            }
         }
-        else
-        {
-            ptr2[i]->valorTotal = ptr[j]->preco * ptr2[i]->qtd;
-        }
-    }
     }
 }
 
@@ -306,7 +304,6 @@ void exibeVendas(VENDA **ptr2,LIVRO **ptr) //Etapa 5
         if(ptr[i]==NULL)
         {
             printf("Cadastre livros para exibir vendas!\n");
-
             break;
         }
 
@@ -322,14 +319,13 @@ void consultaPorTituloVendas(VENDA **ptr2, LIVRO **ptr) //Etapa 6
     printf("\nDigite o título:");
     fflush(stdin);
     scanf("%[^\n]s", &tituloConsulta);
-	fflush(stdin);
+    fflush(stdin);
 
     for(i=0; i<pos_vd; i++)
     {
         if(ptr[i]==NULL)
         {
             printf("\nCadastre livros para consultar vendas!\n");
-
             break;
         }
 
@@ -355,7 +351,6 @@ void consultaPorDataVendas(VENDA **ptr2,LIVRO **ptr) //Etapa 7
         if(ptr[i]==NULL)
         {
             printf("\nCadastre livros para consultar vendas!\n");
-
             break;
         }
 
